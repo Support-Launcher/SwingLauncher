@@ -1,19 +1,44 @@
 plugins {
+    id 'idea'
     id 'java'
+    id 'application'
 }
 
-group = 'fr.cakihorse'
-version = '1.0-SNAPSHOT'
+group 'fr.cakihorse'
+version '1.0.0'
 
 repositories {
     mavenCentral()
+    maven {
+        url = 'https://jitpack.io/'
+        name = 'JitPack'
+    }
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'com.github.litarvan:openauth:518589d222'
+
+
+    implementation 'fr.flowarg:flowupdater:1.7.4'
+    implementation 'fr.flowarg:openlauncherlib:3.2.6'
+
+
 }
 
-test {
-    useJUnitPlatform()
+application {
+    getMainClass().set('fr.cakihorse.swinglauncher.Main')
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+}
+
+jar {
+    manifest.attributes.put('Main-Class', 'fr.cakihorse.swinglauncher.Main')
+
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
