@@ -24,13 +24,13 @@ public class Main {
             f.setSize(1080, 720);
             f.setIconImage(icone.getImage());
 
-            // Créez un panneau personnalisé pour contenir le fond
+            // panel bg
             BackgroundPanel backgroundPanel = new BackgroundPanel(bg.getImage());
 
-            // Utilisez un gestionnaire de disposition pour le panneau principal
+            // mainapel
             JPanel mainPanel = new JPanel(new BorderLayout());
 
-            // Créez le bouton Microsoft
+            //msButton
             JButton msButton = new JButton("Microsoft");
             msButton.setBounds(500, 600, 100, 50);
 
@@ -44,11 +44,7 @@ public class Main {
                     MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
                     authenticator.loginWithAsyncWebview().whenComplete((response, error) -> {
                         if (error != null) {
-
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Erreur");
-                            alert.setContentText(error.getMessage());
-                            alert.show();
+                            JOptionPane.showMessageDialog(f, error.getMessage());
                             return;
                         }
 
@@ -61,10 +57,10 @@ public class Main {
 
 
 
-            // Ajoutez le bouton au panneau principal
+            // add elements
             mainPanel.add(msButton, BorderLayout.SOUTH);
 
-            // Ajoutez le panneau de fond et le panneau principal à la fenêtre
+            // add bg to frame
             f.getContentPane().add(backgroundPanel);
             f.getContentPane().add(mainPanel, BorderLayout.SOUTH);
 
