@@ -39,9 +39,7 @@ public class Launcher extends Component {
     private static GameInfos gameInfos = new GameInfos("launcherswing", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{GameTweak.OPTIFINE});
     private static Path path = gameInfos.getGameDir();
     public static File crashFile = new File(String.valueOf(path), "crashes");
-
     private static CrashReporter cReporter = new CrashReporter(String.valueOf(crashFile), path);
-
     public static AuthInfos authInfos;
 
 
@@ -69,16 +67,13 @@ public class Launcher extends Component {
     }
 
 
-
-
-
-
     public static void update() throws Exception {
 
         final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder()
                 .withName("1.8.8")
                 .build();
         final ILogger logger = new Logger("[LAUNCHER]", null);
+        //for more information about the update, join this discord : https://discord.gg/CS5NxapkDU
         final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
                 .withVanillaVersion(vanillaVersion)
                 .withLogger(logger)

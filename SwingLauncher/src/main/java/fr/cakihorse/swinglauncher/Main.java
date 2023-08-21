@@ -49,10 +49,9 @@ public class Main {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }else {
+            } else {
                 getSaver().load();
             }
-
 
 
             Image bg = Resources.getResource("images/background.png");
@@ -87,7 +86,6 @@ public class Main {
                 }
 
 
-
             });
 
             //playbtn
@@ -112,7 +110,6 @@ public class Main {
                 }
 
 
-
             });
 
 
@@ -127,10 +124,7 @@ public class Main {
             //Show the app
             f.pack();
             f.setVisible(true);
-
-
         });
-
     }
 
     public static Saver getSaver() {
