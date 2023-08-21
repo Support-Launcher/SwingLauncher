@@ -3,12 +3,12 @@ package fr.cakihorse.swinglauncher;
 import fr.cakihorse.swinglauncher.utils.BackgroundPanel;
 import fr.cakihorse.swinglauncher.utils.Resources;
 import fr.cakihorse.swinglauncher.utils.threads.MsThread;
-import fr.flowarg.flowlogger.Logger;
+
+import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +19,28 @@ import java.io.IOException;
 
 public class Main {
 
-    private static File saverFile = new File(String.valueOf(Launcher.getPath()), "user.stock");
+    private static File saverFile = new File(String.valueOf(Launcher.getPath()), "user.infos");
     private static Saver saver = new Saver(saverFile);
+
+
+
     public static void main(String[] args) {
+
+        //Is User logged in ? :
+        MicrosoftAuthenticator microsoftAuthenticator = new MicrosoftAuthenticator();
+        final String refresh_token = getSaver().get("refresh_token");
+        MicrosoftAuthResult result = null;
+
+        if (refresh_token != null && !refresh_token.isEmpty()) {
+            try {
+                result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
+            } catch (MicrosoftAuthenticationException ex) {
+                throw new RuntimeException(ex);
+            }
+            Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
+            System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
+        }
+
         SwingUtilities.invokeLater(() -> {
 
             if (!saverFile.exists()) {
@@ -30,7 +49,11 @@ public class Main {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }else {
+                getSaver().load();
             }
+
+
 
             Image bg = Resources.getResource("images/background.png");
             Image ic = Resources.getResource("images/ic.png");
@@ -51,15 +74,40 @@ public class Main {
             //msButton
             JButton msButton = new JButton("Connexion...");
             msButton.addActionListener(new ActionListener() {
-                private Logger logger;
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (e.getSource() == msButton) {
-                        //if you want the crack connexion use this:
+                        //if you want the crack connexion uncomment and use this:
                         //Launcher.authCrack();
                         //and comment this :
                         Thread t = new Thread(new MsThread());
                         t.start();
+                        System.out.println("Lancement réussi avec succès !");
+                    }
+                }
+
+
+
+            });
+
+            //playbtn
+            JButton playBtn = new JButton("Jouer...");
+            playBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (e.getSource() == playBtn) {
+
+                        try {
+                            Launcher.update();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        try {
+                            Launcher.launch();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+
                     }
                 }
 
@@ -70,6 +118,7 @@ public class Main {
 
             // add elements
             mainPanel.add(msButton, BorderLayout.SOUTH);
+            mainPanel.add(playBtn, BorderLayout.EAST);
 
             // add bg to frame
             f.getContentPane().add(backgroundPanel);
@@ -87,4 +136,5 @@ public class Main {
     public static Saver getSaver() {
         return saver;
     }
+
 }

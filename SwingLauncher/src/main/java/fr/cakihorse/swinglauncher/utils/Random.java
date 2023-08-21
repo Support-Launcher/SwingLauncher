@@ -32,10 +32,4 @@ public class Random {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
-
-
-    public static void main(String[] args) {
-        String randomString = generateRandomString(10); // Génère une chaîne de 10 caractères aléatoires
-        System.out.println("Random String: " + randomString);
-    }
 }
