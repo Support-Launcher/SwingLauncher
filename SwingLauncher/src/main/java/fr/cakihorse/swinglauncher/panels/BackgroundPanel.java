@@ -1,4 +1,4 @@
-package fr.cakihorse.swinglauncher.utils;
+package fr.cakihorse.swinglauncher.panels;
 
 import javax.swing.*;
 import java.awt.Dimension;

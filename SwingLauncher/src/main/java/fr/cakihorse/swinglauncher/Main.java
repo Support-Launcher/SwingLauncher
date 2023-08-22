@@ -1,8 +1,7 @@
 package fr.cakihorse.swinglauncher;
 
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import com.sun.management.OperatingSystemMXBean;
-import fr.cakihorse.swinglauncher.utils.BackgroundPanel;
+import fr.cakihorse.swinglauncher.panels.BackgroundPanel;
 import fr.cakihorse.swinglauncher.utils.ImageButton;
 import fr.cakihorse.swinglauncher.utils.Resources;
 import fr.cakihorse.swinglauncher.threads.MsThread;
@@ -13,14 +12,8 @@ import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 import fr.theshark34.openlauncherlib.util.ramselector.RamSelector;
-import javafx.scene.control.Labeled;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.multi.MultiLookAndFeel;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,27 +21,17 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
-import java.util.Arrays;
-
 public class Main {
 
     private static File saverFile = new File(String.valueOf(Launcher.getPath()), "user.infos");
     private static Saver saver = new Saver(saverFile);
     private static JLabel ramLabel;
-    private static JLabel actualRamLabel;
-    private static int ramFromSaver;
     private static JComboBox<String> ramComboBox;
-    private static File ramFile = new File(Launcher.getPath().toFile(), "ram.infos");
-    private static final RamSelector ramSelector = new RamSelector(getRamFile());
-
 
 
     public static void main(String[] args){
 
-
-
-
-        //Is User logged in ? :
+        //Is User already logged in ? :
         MicrosoftAuthenticator microsoftAuthenticator = new MicrosoftAuthenticator();
         final String refresh_token = getSaver().get("refresh_token");
         MicrosoftAuthResult result = null;
@@ -62,19 +45,13 @@ public class Main {
             }
             Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
             System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
+
         }
 
 
         SwingUtilities.invokeLater(() -> {
 
-            //load and create the saver file if doesn't exists.
-            if (!ramFile.exists()) {
-                try {
-                    ramFile.createNewFile();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            //load and create the saver file if doesn't exist.
             if (!saverFile.exists()) {
                 try {
                     saverFile.createNewFile();
@@ -104,7 +81,7 @@ public class Main {
 
 
             //ramSlider
-            // Got totalMemory on the pc
+            // Got totalMemory available on the pc
             long totalMemory = ((OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean()).getTotalPhysicalMemorySize();
             long totalMemoryInGB = totalMemory / (1024 * 1024 * 1024);
 
@@ -132,7 +109,7 @@ public class Main {
 
 
             //msButton
-            JButton msButton = ImageButton.newButton("images/ms.png", 70, 50, false);
+           JButton msButton = ImageButton.newButton("images/ms.png", 70, 50, false);
             msButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -203,7 +180,5 @@ public class Main {
         return saver;
     }
 
-    public static File getRamFile() {
-        return ramFile;
-    }
+
 }

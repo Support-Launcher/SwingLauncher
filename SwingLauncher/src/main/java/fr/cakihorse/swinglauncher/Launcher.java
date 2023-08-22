@@ -4,41 +4,28 @@ import fr.cakihorse.swinglauncher.utils.Random;
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.flowarg.flowupdater.FlowUpdater;
-import fr.flowarg.flowupdater.download.json.MCP;
-import fr.flowarg.flowupdater.utils.ModFileDeleter;
-import fr.flowarg.flowupdater.utils.UpdaterOptions;
-import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
-import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
+
 import fr.flowarg.flowupdater.versions.VanillaVersion;
-import fr.flowarg.openlauncherlib.NoFramework;
-import fr.litarvan.openauth.AuthPoints;
-import fr.litarvan.openauth.AuthenticationException;
-import fr.litarvan.openauth.Authenticator;
+
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
-import fr.litarvan.openauth.model.AuthProfile;
-import fr.litarvan.openauth.model.response.RefreshResponse;
+
 import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.CrashReporter;
-import fr.theshark34.openlauncherlib.util.Saver;
-import fr.theshark34.openlauncherlib.util.ramselector.RamSelector;
-
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Collections;
 
 
 import static fr.cakihorse.swinglauncher.Main.getSaver;
 
 
 public class Launcher extends Component {
-    private static GameInfos gameInfos = new GameInfos("launcherswing", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{GameTweak.OPTIFINE});
+    private static GameInfos gameInfos = new GameInfos("launcherswing", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{});
     private static Path path = gameInfos.getGameDir();
     public static File crashFile = new File(String.valueOf(path), "crashes");
     private static CrashReporter cReporter = new CrashReporter(String.valueOf(crashFile), path);
@@ -88,13 +75,12 @@ public class Launcher extends Component {
     }
 
     public static void launch() throws Exception {
-        GameInfos infos = new GameInfos("launcherswing", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{});
-
-        ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER, authInfos);
+        ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(gameInfos, GameFolder.FLOW_UPDATER, authInfos);
+        //add ram from saver to args
         profile.getVmArgs().addAll(Arrays.asList(new String[]{"-Xms1G", "-Xmx" + getSaver().get("ram") + "G"}));
         ExternalLauncher launcher = new ExternalLauncher(profile);
 
-
+        //launch Minecraft
         launcher.launch();
     }
 
@@ -108,12 +94,6 @@ public class Launcher extends Component {
         authInfos = new AuthInfos(Random.generateRandomString(10), Random.generateRandomAccesToken(10),Random.generateRandomUUID());
     }
 
-    public static CrashReporter getcReporter() {
-        return cReporter;
-    }
-    public static void setAuthInfos(AuthInfos authInfos) {
-        Launcher.authInfos = authInfos;
-    }
     public static Path getPath() {
         return path;
     }
