@@ -1,5 +1,6 @@
 package fr.cakihorse.swinglauncher;
 
+import com.sun.management.OperatingSystemMXBean;
 import fr.cakihorse.swinglauncher.utils.BackgroundPanel;
 import fr.cakihorse.swinglauncher.utils.ImageButton;
 import fr.cakihorse.swinglauncher.utils.Resources;
@@ -13,19 +14,23 @@ import fr.theshark34.openlauncherlib.util.Saver;
 import fr.theshark34.openlauncherlib.util.ramselector.RamSelector;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+
 import java.util.Arrays;
 
 public class Main {
 
     private static File saverFile = new File(String.valueOf(Launcher.getPath()), "user.infos");
     private static Saver saver = new Saver(saverFile);
-
-
+    private static JLabel ramLabel;
+    private static JComboBox<String> ramComboBox;
     private static File ramFile = new File(Launcher.getPath().toFile(), "ram.infos");
     private static final RamSelector ramSelector = new RamSelector(getRamFile());
 
@@ -50,6 +55,7 @@ public class Main {
             Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
             System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
         }
+
 
         SwingUtilities.invokeLater(() -> {
 
@@ -87,22 +93,32 @@ public class Main {
             JPanel mainPanel = new JPanel(new BorderLayout());
 
 
-            //settingsButton
-            JButton ramButton = ImageButton.newButton("images/settings.png", 70, 50);
-            ramButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == ramButton) {
-                            ramSelector.display();
-                            ramSelector.setFile(ramFile.toPath());
-                            ramSelector.save();
-                            saver.set("ram", Arrays.toString(ramSelector.getRamArguments()));
+            //ramSlider
+            // Got totalMemory on the pc
+            long totalMemory = ((OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean()).getTotalPhysicalMemorySize();
+            long totalMemoryInGB = totalMemory / (1024 * 1024 * 1024);
 
-                    }
-                }
+            // make a values list for the comboBox
+            String[] ramOptions = new String[(int) totalMemoryInGB];
+            for (int i = 0; i < ramOptions.length; i++) {
+                ramOptions[i] = Integer.toString(i + 1);
+            }
 
-
+            // JComboBox
+            ramComboBox = new JComboBox<>(ramOptions);
+            ramComboBox.addActionListener(e -> {
+                String selectedValue = (String) ramComboBox.getSelectedItem();
+                ramLabel.setText("RAM selected : " + selectedValue);
+                int ramInGB = Integer.parseInt(selectedValue);
+                int ramInMB = ramInGB * 1024;
+                saver.set("ram", String.valueOf(ramInMB));
             });
+
+            //Show the ram values
+            ramLabel = new JLabel("RAM selected : " + ramComboBox.getSelectedItem());
+
+
+
 
 
             //msButton
@@ -153,7 +169,9 @@ public class Main {
             // Add buttons to the main panel
             mainPanel.add(msButton, BorderLayout.WEST);
             mainPanel.add(playBtn, BorderLayout.EAST);
-            mainPanel.add(ramButton, BorderLayout.SOUTH);
+            mainPanel.add(ramComboBox, BorderLayout.SOUTH);
+            mainPanel.add(ramLabel);
+
 
             // Add bg to frame
             f.setContentPane(backgroundPanel);

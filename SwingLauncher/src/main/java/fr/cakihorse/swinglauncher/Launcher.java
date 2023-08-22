@@ -30,7 +30,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Path;
-
+import java.util.Arrays;
+import java.util.Collections;
 
 
 import static fr.cakihorse.swinglauncher.Main.getSaver;
@@ -90,9 +91,10 @@ public class Launcher extends Component {
         GameInfos infos = new GameInfos("launcherswing", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{});
 
         ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER, authInfos);
+        profile.getVmArgs().addAll(Arrays.asList(new String[]{"-Xms1024M", "-Xmx" + getSaver().get("ram") + "M"}));
         ExternalLauncher launcher = new ExternalLauncher(profile);
 
-        profile.getArgs().add(getSaver().get("ram"));
+
         launcher.launch();
     }
 
