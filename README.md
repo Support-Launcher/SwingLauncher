@@ -34,6 +34,10 @@ The GUI is awful, **but** this work is for you ;) .
 #### The FAQ is availble [here](https://bricklou.github.io/launcher-tutorials/faq)
 
 
+
+
+
+
 *Français :*
 
 ## Documentation
