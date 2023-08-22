@@ -67,7 +67,7 @@ Le gui est disgracieux, mais c'est là votre travail. Embellissez-le.
 
 
 
-## Auteurs
+## Authors
 
 - [@cakihorse](https://www.github.com/cakihorse)
 
@@ -86,5 +86,5 @@ Le gui est disgracieux, mais c'est là votre travail. Embellissez-le.
 
 ## Support
 
-POur toute demande d'aide, rejoignez [ce discord](https://discord.gg/b9DZbEcX3h).
+For support join [our discord](https://discord.gg/b9DZbEcX3h).
 
