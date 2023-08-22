@@ -10,7 +10,7 @@ public class BackgroundPanel extends JPanel {
 
     public BackgroundPanel(Image image) {
         backgroundImage = image;
-        setPreferredSize(new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null)));
+        setPreferredSize(new Dimension(1280, 720));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package fr.cakihorse.swinglauncher;
 
+import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import com.sun.management.OperatingSystemMXBean;
 import fr.cakihorse.swinglauncher.utils.BackgroundPanel;
 import fr.cakihorse.swinglauncher.utils.ImageButton;
@@ -12,10 +13,14 @@ import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 import fr.theshark34.openlauncherlib.util.ramselector.RamSelector;
+import javafx.scene.control.Labeled;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.multi.MultiLookAndFeel;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,13 +35,16 @@ public class Main {
     private static File saverFile = new File(String.valueOf(Launcher.getPath()), "user.infos");
     private static Saver saver = new Saver(saverFile);
     private static JLabel ramLabel;
+    private static JLabel actualRamLabel;
+    private static int ramFromSaver;
     private static JComboBox<String> ramComboBox;
     private static File ramFile = new File(Launcher.getPath().toFile(), "ram.infos");
     private static final RamSelector ramSelector = new RamSelector(getRamFile());
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+
 
 
 
@@ -84,13 +92,15 @@ public class Main {
 
             JFrame f = new JFrame("Swinglauncher | By Cakihorse");
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            //you make it false if you want :
+            f.setResizable(true);
             f.setSize(800, 600);
             f.setIconImage(ic);
 
             // panel bg
             BackgroundPanel backgroundPanel = new BackgroundPanel(bg);
             // mainpanel
-            JPanel mainPanel = new JPanel(new BorderLayout());
+            JPanel mainPanel = new JPanel();
 
 
             //ramSlider
@@ -109,20 +119,20 @@ public class Main {
             ramComboBox.addActionListener(e -> {
                 String selectedValue = (String) ramComboBox.getSelectedItem();
                 ramLabel.setText("RAM selected : " + selectedValue);
-                int ramInGB = Integer.parseInt(selectedValue);
-                int ramInMB = ramInGB * 1024;
-                saver.set("ram", String.valueOf(ramInMB));
-            });
 
-            //Show the ram values
+                int ramInGB = Integer.parseInt(selectedValue);
+                saver.set("ram", String.valueOf(ramInGB));
+            });
+            //Show the ram values in a JLabel
             ramLabel = new JLabel("RAM selected : " + ramComboBox.getSelectedItem());
 
 
 
 
 
+
             //msButton
-            JButton msButton = ImageButton.newButton("images/ms.png", 70, 50);
+            JButton msButton = ImageButton.newButton("images/ms.png", 70, 50, false);
             msButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -142,7 +152,7 @@ public class Main {
 
 
             //playButton
-            JButton playBtn = ImageButton.newButton("images/play.png", 70, 50);
+            JButton playBtn = ImageButton.newButton("images/play.png", 70, 50, false);
             playBtn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -166,11 +176,16 @@ public class Main {
             });
 
 
+
             // Add buttons to the main panel
-            mainPanel.add(msButton, BorderLayout.WEST);
-            mainPanel.add(playBtn, BorderLayout.EAST);
-            mainPanel.add(ramComboBox, BorderLayout.SOUTH);
+            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+            mainPanel.add(msButton);
+            mainPanel.add(Box.createHorizontalStrut(30)); // Ajoute un espace horizontal entre les boutons
+            mainPanel.add(playBtn);
+            mainPanel.add(Box.createHorizontalGlue()); // Étire les boutons pour qu'ils remplissent l'espace disponible
+            mainPanel.add(ramComboBox);
             mainPanel.add(ramLabel);
+
 
 
             // Add bg to frame
