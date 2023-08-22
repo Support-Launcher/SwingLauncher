@@ -71,7 +71,7 @@ Le gui est disgracieux, mais c'est là votre travail. Embellissez-le.
 
 - [@cakihorse](https://www.github.com/cakihorse)
 
-### Contributeurs :
+### Contributors :
 
 - [@Bricklou](https://www.github.com/bricklou)
 - [@FlowArg](https://www.github.com/FlowArg)
