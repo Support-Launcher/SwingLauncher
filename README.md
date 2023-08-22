@@ -4,7 +4,7 @@
 
 An open-source template minecraft launcher using FlowUpdater, OpenLauncherLib, OpenAuth and **Swing**.
 
-
+*English :*
 
 ## Documentation
 
@@ -34,11 +34,40 @@ The GUI is awful, **but** this work is for you ;) .
 #### The FAQ is availble [here](https://bricklou.github.io/launcher-tutorials/faq)
 
 
-## Authors
+*Français :*
+
+## Documentation
+
+En suivant ce lien vous trouverez plus d'informations concernant les launchers.
+
+[Documentation](https://bricklou.github.io/launcher-tutorials)
+
+
+## Installation
+
+Ouvrez ce projet avec l'ide que vous voulez utiliser. ([Intelij Idea](https://www.jetbrains.com/idea/download/download-thanks.html) est fortement recommandé mais à votre guise ! :) ) Maintenant vous êtes prêt à faire votre propre launcher avec ce repo comme base.
+
+**Faites attention d'ouvrir le bon dossier !**
+
+
+    
+## Notes
+ExternalLaunch va bientôt être remplacé par noFramework
+
+Le gui est disgracieux, mais c'est là votre travail. Embellissez-le.
+
+*Si vous voulez contribuer au projet n'hésitez pas à ouvrir des pull requests/issues! Nous vous en somme très reconnaissant*
+## FAQ
+
+#### La FAQ est disponible [ici](https://bricklou.github.io/launcher-tutorials/faq)
+
+
+
+## Auteurs
 
 - [@cakihorse](https://www.github.com/cakihorse)
 
-### Contributors :
+### Contributeurs :
 
 - [@Bricklou](https://www.github.com/bricklou)
 - [@FlowArg](https://www.github.com/FlowArg)
@@ -53,5 +82,5 @@ The GUI is awful, **but** this work is for you ;) .
 
 ## Support
 
-For support, join [our discord](https://discord.gg/b9DZbEcX3h).
+POur toute demande d'aide, rejoignez [ce discord](https://discord.gg/b9DZbEcX3h).
 
