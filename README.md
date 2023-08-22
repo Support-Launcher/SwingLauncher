@@ -14,8 +14,9 @@ Here, you can find more informations about this launcher.
 
 ## Installation
 
-How to use and modify tehe project for create your own Launcher using this repo as a template.
+How to use and modify the project for create your own Launcher using this repo as a template.
 
+Open this project with the editor you want to use. ([Itelij Idea](https://www.jetbrains.com/idea/download/download-thanks.html) is strongly recommended but you can with other ide.)
 ```bash
   npm install my-project
   cd my-project
