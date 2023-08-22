@@ -1,14 +1,16 @@
 package fr.cakihorse.swinglauncher;
 
 import fr.cakihorse.swinglauncher.utils.BackgroundPanel;
+import fr.cakihorse.swinglauncher.utils.ImageButton;
 import fr.cakihorse.swinglauncher.utils.Resources;
-import fr.cakihorse.swinglauncher.utils.threads.MsThread;
+import fr.cakihorse.swinglauncher.threads.MsThread;
 
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
+import fr.theshark34.openlauncherlib.util.ramselector.RamSelector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
 
@@ -23,8 +26,14 @@ public class Main {
     private static Saver saver = new Saver(saverFile);
 
 
+    private static File ramFile = new File(Launcher.getPath().toFile(), "ram.infos");
+    private static final RamSelector ramSelector = new RamSelector(getRamFile());
+
+
 
     public static void main(String[] args) {
+
+
 
         //Is User logged in ? :
         MicrosoftAuthenticator microsoftAuthenticator = new MicrosoftAuthenticator();
@@ -35,6 +44,7 @@ public class Main {
             try {
                 result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
             } catch (MicrosoftAuthenticationException ex) {
+
                 throw new RuntimeException(ex);
             }
             Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
@@ -43,6 +53,14 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> {
 
+            //load and create the saver file if doesn't exists.
+            if (!ramFile.exists()) {
+                try {
+                    ramFile.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (!saverFile.exists()) {
                 try {
                     saverFile.createNewFile();
@@ -65,13 +83,30 @@ public class Main {
 
             // panel bg
             BackgroundPanel backgroundPanel = new BackgroundPanel(bg);
-
             // mainpanel
             JPanel mainPanel = new JPanel(new BorderLayout());
 
 
+            //settingsButton
+            JButton ramButton = ImageButton.newButton("images/settings.png", 70, 50);
+            ramButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (e.getSource() == ramButton) {
+                            ramSelector.display();
+                            ramSelector.setFile(ramFile.toPath());
+                            ramSelector.save();
+                            saver.set("ram", Arrays.toString(ramSelector.getRamArguments()));
+
+                    }
+                }
+
+
+            });
+
+
             //msButton
-            JButton msButton = new JButton("Connexion...");
+            JButton msButton = ImageButton.newButton("images/ms.png", 70, 50);
             msButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -81,15 +116,17 @@ public class Main {
                         //and comment this :
                         Thread t = new Thread(new MsThread());
                         t.start();
-                        System.out.println("Lancement réussi avec succès !");
+                        System.out.println("Authentication successful !");
                     }
                 }
-
-
             });
 
-            //playbtn
-            JButton playBtn = new JButton("Jouer...");
+
+
+
+
+            //playButton
+            JButton playBtn = ImageButton.newButton("images/play.png", 70, 50);
             playBtn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -103,25 +140,27 @@ public class Main {
                         try {
                             Launcher.launch();
                         } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage() + " | Please login!");
                             throw new RuntimeException(ex);
+
                         }
 
                     }
                 }
-
-
             });
 
 
-            // add elements
-            mainPanel.add(msButton, BorderLayout.SOUTH);
+            // Add buttons to the main panel
+            mainPanel.add(msButton, BorderLayout.WEST);
             mainPanel.add(playBtn, BorderLayout.EAST);
+            mainPanel.add(ramButton, BorderLayout.SOUTH);
 
-            // add bg to frame
-            f.getContentPane().add(backgroundPanel);
-            f.getContentPane().add(mainPanel, BorderLayout.SOUTH);
+            // Add bg to frame
+            f.setContentPane(backgroundPanel);
+            f.add(mainPanel);
 
-            //Show the app
+            // ...
+
             f.pack();
             f.setVisible(true);
         });
@@ -131,4 +170,7 @@ public class Main {
         return saver;
     }
 
+    public static File getRamFile() {
+        return ramFile;
+    }
 }

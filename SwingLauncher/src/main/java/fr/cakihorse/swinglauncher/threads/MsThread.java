@@ -1,4 +1,4 @@
-package fr.cakihorse.swinglauncher.utils.threads;
+package fr.cakihorse.swinglauncher.threads;
 
 import fr.cakihorse.swinglauncher.Launcher;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;

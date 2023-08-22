@@ -24,6 +24,7 @@ import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.CrashReporter;
 import fr.theshark34.openlauncherlib.util.Saver;
+import fr.theshark34.openlauncherlib.util.ramselector.RamSelector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,6 +72,10 @@ public class Launcher extends Component {
 
         final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder()
                 .withName("1.8.8")
+                /*with mcp :
+                .withMCP(new MCP(YourdownloadUrl, Cleintsha1, ClientSize))
+                you can do a Random.generateRandomString for the sha1 but the client will be downloaded each restart.
+                */
                 .build();
         final ILogger logger = new Logger("[LAUNCHER]", null);
         //for more information about the update, join this discord : https://discord.gg/CS5NxapkDU
@@ -84,17 +89,17 @@ public class Launcher extends Component {
     public static void launch() throws Exception {
         GameInfos infos = new GameInfos("launcherswing", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{});
 
-
         ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER, authInfos);
         ExternalLauncher launcher = new ExternalLauncher(profile);
 
+        profile.getArgs().add(getSaver().get("ram"));
         launcher.launch();
     }
 
 
     public static void authCrack() {
         /*
-         * WARNING: If you want the user to use their own username (entered in a text field, for example),
+         * WARNING: If you want the users to use their own username (entered in a text field, for example),
          * you will need to handle it yourself. In this context, we generate a new username every time
          * the app is restarted.
          */
