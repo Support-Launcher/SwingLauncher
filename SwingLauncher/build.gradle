@@ -1,6 +1,6 @@
 plugins {
     id 'idea'
-    id 'java'
+    id 'java-library'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
@@ -9,11 +9,13 @@ group 'fr.cakihorse'
 version '1.0.0'
 
 repositories {
+
     mavenCentral()
     maven {
         url = 'https://jitpack.io/'
         name = 'JitPack'
     }
+
 }
 
 dependencies {
@@ -22,6 +24,7 @@ dependencies {
 
     implementation 'fr.flowarg:flowupdater:1.7.4'
     implementation 'fr.flowarg:openlauncherlib:3.2.6'
+
 
 
 }
