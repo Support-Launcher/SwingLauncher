@@ -1,0 +1,61 @@
+plugins {
+    id 'idea'
+    id 'application'
+    id 'java-library'
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+}
+
+group = 'fr.cakihorse'
+version = '2.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://jitpack.io/'
+        name = 'JitPack'
+    }
+
+    maven {
+        url "https://alwyn974.github.io/maven/"
+    }
+
+}
+
+dependencies {
+    //dependencies to launch the game
+    implementation 'com.github.litarvan:openauth:518589d222'
+    implementation 'fr.flowarg:flowupdater:1.7.4'
+    implementation 'fr.flowarg:openlauncherlib:3.2.6'
+
+
+    //themes
+    implementation 'com.formdev:flatlaf:3.2.1'
+    implementation 'com.formdev:flatlaf-intellij-themes:3.2.5'
+    implementation fileTree(dir: 'lib', include: '*.jar')
+
+
+    //ping servers
+    implementation 're.alwyn974.minecraftserverping:MinecraftServerPing:2.0.0'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+}
+
+application {
+    getMainClass().set('fr.cakihorse.echolaunch.app.Main')
+}
+
+
+compileJava {
+    options.encoding = "UTF-8"
+}
+
+jar {
+    manifest.attributes.put('Main-Class', 'fr.cakihorse.echolaunch.app.Main')
+
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
