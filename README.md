@@ -1,5 +1,5 @@
 
-# ![Logo](https://cakihorse.fr/wingLauncher.png)
+# ![[Logo](https://cakihorse.fr/wingLauncher.png)](https://github.com/Support-Launcher/SwingLauncher/blob/main/src/main/resources/logo.png?raw=true)
 
 
 An open-source template minecraft launcher using FlowUpdater, OpenLauncherLib, OpenAuth and **Swing**.
