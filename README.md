@@ -15,7 +15,7 @@ Here, you can find more informations about this and javafx launcher.
 
 ## Installation
 
-How to use and modify the project for create your own Launcher using this repo as a template.
+How to use and modify the project to create your own Launcher using this repo as a template.
 
 Open this project with the editor you want to use. ([Intelij Idea](https://www.jetbrains.com/idea/download/download-thanks.html) is strongly recommended but you can use other ide.) Now you are ready to code your own launcher with this repo as base.
 
