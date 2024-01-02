@@ -22,7 +22,7 @@ import static fr.cakihorse.swinglauncher.app.Main.getSaver;
 
 
 public class Launcher extends Component {
-    private static GameInfos gameInfos = new GameInfos("echocraft", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{});
+    private static GameInfos gameInfos = new GameInfos("launcherswing", new GameVersion("1.8.8", GameType.V1_8_HIGHER), new GameTweak[]{});
     private static Path path = gameInfos.getGameDir();
     public static File crashFile = new File(String.valueOf(path), "crashes");
     private static CrashReporter cReporter = new CrashReporter(String.valueOf(crashFile), path);
