@@ -4,7 +4,7 @@
 
 An open-source template minecraft launcher using FlowUpdater, OpenLauncherLib, OpenAuth and **Swing**.
 
-*English :*
+*English:*
 
 ## Documentation
 
@@ -19,16 +19,16 @@ How to use and modify the project to create your own Launcher using this repo as
 
 Open this project with the editor you want to use. ([Intelij Idea](https://www.jetbrains.com/idea/download/download-thanks.html) is strongly recommended but you can use other ide.) Now you are ready to code your own launcher with this repo as base.
 
-**Please be careful to open the righ folder !**
+**Please be careful to open the righ folder!**
 
 
     
 ## Notes
 ExternalLaunch will change soon to a noFramework Launch.
 
-The GUI is awful, **but** this work is for you ;) .
+The GUI is awful, **but** this work is for you ;).
 
-*By the way, if you want to pull request this project to help us, we thank you in advance ! :)*
+*By the way, if you want to pull request this project to help us, we thank you in advance! :)*
 ## FAQ
 
 #### The FAQ is availble [here](https://bricklou.github.io/launcher-tutorials/faq)
@@ -38,7 +38,7 @@ The GUI is awful, **but** this work is for you ;) .
 
 - [@cakihorse](https://www.github.com/cakihorse)
 
-### Contributors :
+### Contributors:
 
 - [@Bricklou](https://www.github.com/bricklou)
 - [@FlowArg](https://www.github.com/FlowArg)
