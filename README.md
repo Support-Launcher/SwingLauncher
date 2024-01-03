@@ -24,9 +24,9 @@ Open this project with the editor you want to use. ([Intelij Idea](https://www.j
 
     
 ## Notes
-We are now using noFramework ! 
+ - We are now using noFramework ! 
 
-The GUI is awful, **but** this work is for you ;).
+ - The GUI is awful, **but** this work is for you ;).
 
 *By the way, if you want to pull request this project to help us, we thank you in advance! :)*
 ## FAQ
