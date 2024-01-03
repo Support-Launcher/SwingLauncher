@@ -25,7 +25,7 @@ dependencies {
     //dependencies to launch the game
     implementation 'com.github.litarvan:openauth:518589d222'
     implementation 'fr.flowarg:flowupdater:1.7.4'
-    implementation 'fr.flowarg:openlauncherlib:3.2.6'
+    implementation 'fr.flowarg:openlauncherlib:3.2.8'
 
 
     //themes

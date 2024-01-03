@@ -21,27 +21,27 @@ import java.io.IOException;
 
 public class Main extends JFrame {
 
-    private static File saverFile = new File(String.valueOf(Launcher.getPath()), "user.infos");
-    private static Saver saver = new Saver(saverFile);
+    private static final File saverFile = new File(String.valueOf(Launcher.getGameDir()), "user.infos");
+    private static final Saver saver = new Saver(saverFile);
     private int mouseX, mouseY;
 
     public Main() throws IOException {
 
         /*
-        *               WARNING !
-        * This programme is gave but, the design must be changed !
-        * Only keep the "Back-end" of the app !
-        * (The design is only there because it has to be, please make it yours!)
-        * -------------------------------------------------
-        * To build the project with dependencies and make the jar executable use the
-        * Gradle task "shadowJar".
-        * -------------------------------------------------
-        * Author: Cakihorse.
-        *
-        */
+         *               WARNING !
+         * This programme is gave but, the design must be changed !
+         * Only keep the "Back-end" of the app !
+         * (The design is only there because it has to be, please make it yours!)
+         * -------------------------------------------------
+         * To build the project with dependencies and make the jar executable use the
+         * Gradle task "shadowJar".
+         * -------------------------------------------------
+         * Author: Cakihorse.
+         *
+         */
 
 
-        this.setTitle("Launcher V2");
+        this.setTitle("SwingLauncher");
         this.setSize(1280, 720);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,16 +49,15 @@ public class Main extends JFrame {
         this.setIconImage(new ImageIcon(Resources.getResource("logo.png")).getImage());
         this.setResizable(false);
 
-        //verify if the user is connected
+        //Verify if the user is connected and change the panel if true
         MicrosoftAuthenticator microsoftAuthenticator = new MicrosoftAuthenticator();
         final String refresh_token = getSaver().get("refresh_token");
-        MicrosoftAuthResult result = null;
+        MicrosoftAuthResult result;
 
-        if (refresh_token != null && !refresh_token.isEmpty()) {
+        if (refresh_token != null) {
             try {
                 result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
             } catch (MicrosoftAuthenticationException ex) {
-
                 throw new RuntimeException(ex);
             }
             Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
@@ -98,16 +97,15 @@ public class Main extends JFrame {
 
     public static void main(String[] args) throws IOException {
         try {
-            //setuyo theme
+            //setup theme
             FlatArcDarkIJTheme.setup();
         } catch (Exception e) {
             System.out.println("Erreur lors du chargement du thème");
-            e.printStackTrace();
+            Launcher.logger.printStackTrace(e);
         }
 
+        //to launch the app
         Main main = new Main();
-
-
 
     }
     public static Saver getSaver() {

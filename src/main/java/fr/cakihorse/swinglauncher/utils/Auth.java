@@ -13,19 +13,21 @@ import java.net.MalformedURLException;
 
 import static fr.cakihorse.swinglauncher.app.Main.getSaver;
 
-
 public class Auth {
 
-    public static AuthInfos authInfos;
+
 
     public static void launch() throws MicrosoftAuthenticationException, MalformedURLException {
+
+
+
         if (getSaver().get("refresh_token") == null) {
             MicrosoftAuthenticator microsoftAuthenticator = new MicrosoftAuthenticator();
             final String refresh_token = getSaver().get("refresh_token");
             MicrosoftAuthResult result = null;
-            if (refresh_token != null && !refresh_token.isEmpty()) {
+            if (refresh_token != null) {
                 result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
-                authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
+                Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
                 System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
             } else {
                 result = microsoftAuthenticator.loginWithWebview();
@@ -34,7 +36,7 @@ public class Auth {
                 getSaver().set("clientToken", result.getClientId());
 
                 getSaver().save();
-                authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
+                Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
                 System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
 
 
