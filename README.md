@@ -24,7 +24,7 @@ Open this project with the editor you want to use. ([Intelij Idea](https://www.j
 
     
 ## Notes
-ExternalLaunch will change soon to a noFramework Launch.
+We are now using noFramework ! 
 
 The GUI is awful, **but** this work is for you ;).
 
