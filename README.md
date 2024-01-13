@@ -10,7 +10,7 @@ An open-source template minecraft launcher using FlowUpdater, OpenLauncherLib, O
 
 Here, you can find more informations about this and javafx launcher.
 
-[Documentation](https://bricklou.github.io/launcher-tutorials)
+[Documentation]([https://bricklou.github.io/launcher-tutorial](https://bricklou.github.io/launcher-tutorials/swing-launcher/Get-Started)s)
 
 
 ## Installation
